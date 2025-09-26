@@ -1,0 +1,25 @@
+<div>Total order price :{{total}}</div>
+<h2>selected Cat Id : {{seletctedCategoryId}}</h2>
+
+<div class="mb-3">
+    <label for="" class="form-label">
+        <select name="" id="" [(ngModel)]="seletctedCategoryId">
+            <option *ngFor="let category of categories" [value]="category.id">{{category.name}}</option>
+        </select>
+    </label>
+</div>
+
+
+<button (click)="change()">change category</button>
+<div [style.background]="product.quantity==0?'yellow':'green'" [class.d-none]="product.catId!=seletctedCategoryId"
+    *ngFor="let product of products" class="card" style="width: 18rem;">
+    <img [src]="product.imgUrl" class="card-img-top" alt="...">
+    <div class="card-body">
+        <h5 class="card-title">{{product.name}}</h5>
+        <p class="card-text">Price : {{product.price}}</p>
+        <p class="card-text">Quantity: {{product.quantity}}</p>
+
+        <input type="number" #countInp>
+        <button class="btn btn-success" (click)="buy(countInp.value,product.price)">buy</button>
+    </div>
+</div>
