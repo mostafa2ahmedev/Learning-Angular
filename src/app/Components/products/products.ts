@@ -21,7 +21,7 @@ export class Products {
         id: 100,
         name: 'Dell Laptop',
         price: 50000,
-        quantity: 3,
+        quantity: 1,
         imgUrl: 'https://picsum.photos/seed/picsum/200/300',
         catId: 1,
       },
@@ -37,7 +37,7 @@ export class Products {
         id: 300,
         name: 'Lenovo Laptop',
         price: 50000,
-        quantity: 3,
+        quantity: 2,
         imgUrl: 'https://picsum.photos/seed/picsum/200/300',
         catId: 1,
       },
@@ -99,5 +99,8 @@ export class Products {
   }
   change() {
     this.seletctedCategoryId = 3;
+  }
+  trackItem(index: number, item: Iproduct): number {
+    return item.id;
   }
 }
