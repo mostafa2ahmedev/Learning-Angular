@@ -22,7 +22,9 @@
             border:(product.quantity==1)?'1px solid red':'1px solid green'}"
         [ngClass]="(product.quantity==1)?'text-danger':''">
         <h5 class="card-title">{{product.name}}</h5>
-        <p class="card-text">Price : {{product.price}}</p>
+
+
+        <p class="card-text">Price : {{product.price |currency:'EUR':'code'}}</p>
 
         @switch (
         product.quantity
@@ -48,3 +50,4 @@
 <h1> No Product Found</h1>
 
 }
+<h1>{{myDate|date:'shortDate' }}</h1>

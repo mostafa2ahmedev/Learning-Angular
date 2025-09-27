@@ -16,6 +16,7 @@ export class Products {
   categories: Icategory[];
   seletctedCategoryId: number = 0;
   total: number = 0;
+  myDate: Date = new Date();
   constructor() {
     this.products = [
       {
