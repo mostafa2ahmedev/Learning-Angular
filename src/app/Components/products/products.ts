@@ -97,7 +97,8 @@ export class Products {
       },
     ];
   }
-
+  ngOnInit() {}
+  ngOnChanges() {}
   buy(count: string, price: number) {
     this.total += +count * price; //casting
   }

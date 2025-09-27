@@ -1,10 +1,18 @@
-import { Directive, ElementRef, HostListener, input, Input } from '@angular/core';
+import {
+  Directive,
+  ElementRef,
+  HostListener,
+  input,
+  Input,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 
 @Directive({
   selector: '[appHighlightCard]',
   standalone: true,
 })
-export class HighlightCard {
+export class HighlightCard implements OnChanges {
   // ele: ElementRef;
   @Input()
   externalColor: string = 'black';
@@ -15,8 +23,11 @@ export class HighlightCard {
     //There is a minor issue here
     //That the defaultColor will be with"red" because the constructor called
     //before the vales comes in
-    ele.nativeElement.style.backgroundColor = this.defaultColor;
   }
+  ngOnChanges(): void {
+    this.ele.nativeElement.style.backgroundColor = this.defaultColor;
+  }
+
   @HostListener('mouseover')
   over() {
     this.ele.nativeElement.style.backgroundColor = this.externalColor;
