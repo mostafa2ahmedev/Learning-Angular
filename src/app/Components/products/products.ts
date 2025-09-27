@@ -4,10 +4,11 @@ import { CommonModule } from '@angular/common';
 import { Icategory } from '../../Models/icategory';
 import { FormsModule } from '@angular/forms';
 import { HighlightCard } from '../../Directives/highlight-card';
+import { SquarePipe } from '../../Pipes/square-pipe';
 
 @Component({
   selector: 'app-products',
-  imports: [CommonModule, FormsModule, HighlightCard],
+  imports: [CommonModule, FormsModule, HighlightCard, SquarePipe],
   templateUrl: './products.html',
   styleUrl: './products.css',
 })
@@ -17,6 +18,7 @@ export class Products {
   seletctedCategoryId: number = 0;
   total: number = 0;
   myDate: Date = new Date();
+  num: number = 2;
   constructor() {
     this.products = [
       {
