@@ -1,4 +1,4 @@
-import { Component, NgModule } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, NgModule, ViewChild } from '@angular/core';
 import { Products } from '../products/products';
 import { FormsModule, NgModel } from '@angular/forms';
 import { Icategory } from '../../Models/icategory';
@@ -10,10 +10,12 @@ import { CommonModule } from '@angular/common';
   templateUrl: './order.html',
   styleUrl: './order.css',
 })
-export class Order {
+export class Order implements AfterViewInit {
   seletctedCategoryId: number = 0;
   categories: Icategory[];
   receivedTotalPrice: number = 0;
+  @ViewChild('userNameInput') myInp!: ElementRef;
+  @ViewChild(Products) prdComponentObj!: Products;
   constructor() {
     this.categories = [
       {
@@ -33,6 +35,11 @@ export class Order {
         name: 'Accessories',
       },
     ];
+  }
+  ngAfterViewInit(): void {
+    this.myInp.nativeElement.value = 'Mona';
+    console.log(this.myInp);
+    console.log(this.prdComponentObj.total);
   }
   calcTotalPrice(top: number) {
     this.receivedTotalPrice = top;
