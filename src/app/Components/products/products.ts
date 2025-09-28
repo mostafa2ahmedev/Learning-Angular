@@ -1,4 +1,12 @@
-import { Component } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  output,
+  SimpleChanges,
+} from '@angular/core';
 import { Iproduct } from '../../Models/iproduct';
 import { CommonModule } from '@angular/common';
 import { Icategory } from '../../Models/icategory';
@@ -12,13 +20,19 @@ import { SquarePipe } from '../../Pipes/square-pipe';
   templateUrl: './products.html',
   styleUrl: './products.css',
 })
-export class Products {
+export class Products implements OnChanges {
   products: Iproduct[];
-  categories: Icategory[];
-  seletctedCategoryId: number = 0;
+  filteredProducts: Iproduct[];
+  // categories: Icategory[];
+  // seletctedCategoryId: number = 0;
   total: number = 0;
   myDate: Date = new Date();
   num: number = 2;
+  @Output()
+  onTotalPriceChanged: EventEmitter<number>;
+
+  @Input()
+  receivedCatId: number = 0;
   constructor() {
     this.products = [
       {
@@ -78,34 +92,48 @@ export class Products {
         catId: 4,
       },
     ];
-    this.categories = [
-      {
-        id: 1,
-        name: 'Laptop',
-      },
-      {
-        id: 2,
-        name: 'Mobile',
-      },
-      {
-        id: 3,
-        name: 'Watch',
-      },
-      {
-        id: 4,
-        name: 'Accessories',
-      },
-    ];
+    // this.categories = [
+    //   {
+    //     id: 1,
+    //     name: 'Laptop',
+    //   },
+    //   {
+    //     id: 2,
+    //     name: 'Mobile',
+    //   },
+    //   {
+    //     id: 3,
+    //     name: 'Watch',
+    //   },
+    //   {
+    //     id: 4,
+    //     name: 'Accessories',
+    //   },
+    // ];
+    this.filteredProducts = this.products;
+    this.onTotalPriceChanged = new EventEmitter<number>();
   }
-  ngOnInit() {}
-  ngOnChanges() {}
+  ngOnChanges(): void {
+    this.filterProducts();
+  }
+
   buy(count: string, price: number) {
     this.total += +count * price; //casting
+
+    this.onTotalPriceChanged.emit(this.total);
   }
   change() {
-    this.seletctedCategoryId = 3;
+    this.receivedCatId = 3;
   }
   trackItem(index: number, item: Iproduct): number {
     return item.id;
+  }
+
+  filterProducts() {
+    if (this.receivedCatId == 0) {
+      this.filteredProducts = this.products;
+    } else {
+      this.filteredProducts = this.products.filter((p) => p.catId == this.receivedCatId);
+    }
   }
 }

@@ -1,22 +1,13 @@
-<div>Total order price :{{total}}</div>
-<h2>selected Cat Id : {{seletctedCategoryId}}</h2>
-
-<div class="mb-3">
-    <label for="" class="form-label">
-        <select name="" id="" [(ngModel)]="seletctedCategoryId">
-            <option *ngFor="let category of categories" [value]="category.id">{{category.name}}</option>
-        </select>
-    </label>
-</div>
+<h2>selected Cat Id : {{receivedCatId}}</h2>
 
 
-<button (click)="change()">change category</button>
+
+<!-- <button (click)="change()">change category</button> -->
 
 
-@for (product of products; track product.id; let i = $index) {
+@for (product of filteredProducts; track product.id; let i = $index) {
 
-<div [class.d-none]="product.catId!=seletctedCategoryId" class="card" style="width: 18rem;" appHighlightCard="gray"
-    externalColor="pink">
+<div class="card" style="width: 18rem;" appHighlightCard="gray" externalColor="pink">
     <img [src]="product.imgUrl" class="card-img-top" alt="...">
     <div class="card-body" [ngStyle]="{
             border:(product.quantity==1)?'1px solid red':'1px solid green'}"
