@@ -13,6 +13,7 @@ import { Icategory } from '../../Models/icategory';
 import { FormsModule } from '@angular/forms';
 import { HighlightCard } from '../../Directives/highlight-card';
 import { SquarePipe } from '../../Pipes/square-pipe';
+import { Staticproducts } from '../Services/staticproducts';
 
 @Component({
   selector: 'app-products',
@@ -33,65 +34,65 @@ export class Products implements OnChanges {
 
   @Input()
   receivedCatId: number = 0;
-  constructor() {
-    this.products = [
-      {
-        id: 100,
-        name: 'Dell Laptop',
-        price: 50000,
-        quantity: 1,
-        imgUrl: 'https://picsum.photos/seed/picsum/200/300',
-        catId: 1,
-      },
-      {
-        id: 200,
-        name: 'Assus Laptop',
-        price: 50000,
-        quantity: 0,
-        imgUrl: 'https://picsum.photos/seed/picsum/200/300',
-        catId: 1,
-      },
-      {
-        id: 300,
-        name: 'Lenovo Laptop',
-        price: 50000,
-        quantity: 2,
-        imgUrl: 'https://picsum.photos/seed/picsum/200/300',
-        catId: 1,
-      },
-      {
-        id: 400,
-        name: 'Iphone',
-        price: 50000,
-        quantity: 3,
-        imgUrl: 'https://picsum.photos/seed/picsum/200/300',
-        catId: 3,
-      },
-      {
-        id: 500,
-        name: 'MSI Laptop',
-        price: 50000,
-        quantity: 3,
-        imgUrl: 'https://picsum.photos/seed/picsum/200/300',
-        catId: 1,
-      },
-      {
-        id: 600,
-        name: 'Watch ',
-        price: 50000,
-        quantity: 3,
-        imgUrl: 'https://picsum.photos/seed/picsum/200/300',
-        catId: 2,
-      },
-      {
-        id: 700,
-        name: 'AirPods',
-        price: 50000,
-        quantity: 4,
-        imgUrl: 'https://picsum.photos/seed/picsum/200/300',
-        catId: 4,
-      },
-    ];
+  constructor(private _staticProductsService: Staticproducts) {
+    // this.products = [
+    //   {
+    //     id: 100,
+    //     name: 'Dell Laptop',
+    //     price: 50000,
+    //     quantity: 1,
+    //     imgUrl: 'https://picsum.photos/seed/picsum/200/300',
+    //     catId: 1,
+    //   },
+    //   {
+    //     id: 200,
+    //     name: 'Assus Laptop',
+    //     price: 50000,
+    //     quantity: 0,
+    //     imgUrl: 'https://picsum.photos/seed/picsum/200/300',
+    //     catId: 1,
+    //   },
+    //   {
+    //     id: 300,
+    //     name: 'Lenovo Laptop',
+    //     price: 50000,
+    //     quantity: 2,
+    //     imgUrl: 'https://picsum.photos/seed/picsum/200/300',
+    //     catId: 1,
+    //   },
+    //   {
+    //     id: 400,
+    //     name: 'Iphone',
+    //     price: 50000,
+    //     quantity: 3,
+    //     imgUrl: 'https://picsum.photos/seed/picsum/200/300',
+    //     catId: 3,
+    //   },
+    //   {
+    //     id: 500,
+    //     name: 'MSI Laptop',
+    //     price: 50000,
+    //     quantity: 3,
+    //     imgUrl: 'https://picsum.photos/seed/picsum/200/300',
+    //     catId: 1,
+    //   },
+    //   {
+    //     id: 600,
+    //     name: 'Watch ',
+    //     price: 50000,
+    //     quantity: 3,
+    //     imgUrl: 'https://picsum.photos/seed/picsum/200/300',
+    //     catId: 2,
+    //   },
+    //   {
+    //     id: 700,
+    //     name: 'AirPods',
+    //     price: 50000,
+    //     quantity: 4,
+    //     imgUrl: 'https://picsum.photos/seed/picsum/200/300',
+    //     catId: 4,
+    //   },
+    // ];
     // this.categories = [
     //   {
     //     id: 1,
@@ -110,7 +111,8 @@ export class Products implements OnChanges {
     //     name: 'Accessories',
     //   },
     // ];
-    this.filteredProducts = this.products;
+    // this.filteredProducts = this.products;
+    this.filteredProducts = this.products = this._staticProductsService.getAllProducts();
     this.onTotalPriceChanged = new EventEmitter<number>();
   }
   ngOnChanges(): void {
@@ -130,10 +132,17 @@ export class Products implements OnChanges {
   }
 
   filterProducts() {
+    // if (this.receivedCatId == 0) {
+    //   this.filteredProducts = this.products;
+    // } else {
+    //   this.filteredProducts = this.products.filter((p) => p.catId == this.receivedCatId);
+    // }
     if (this.receivedCatId == 0) {
       this.filteredProducts = this.products;
     } else {
-      this.filteredProducts = this.products.filter((p) => p.catId == this.receivedCatId);
+      this.filteredProducts = this._staticProductsService.filterProductsByCategoryId(
+        this.receivedCatId
+      );
     }
   }
 }
