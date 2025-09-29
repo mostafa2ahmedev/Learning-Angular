@@ -31,6 +31,9 @@
         <p class="card-text">Index: {{i+1}}</p>
         <input type="number" #countInp>
         <button class="btn btn-success" (click)="buy(countInp.value,product.price)">buy</button>
+        <!-- <button (click)="navigateToDetails(product.id)">Details</button> -->
+        <button [routerLink]="['/Details',product.id]">Details</button>
+
     </div>
 </div>
 

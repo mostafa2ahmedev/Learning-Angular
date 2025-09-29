@@ -14,10 +14,11 @@ import { FormsModule } from '@angular/forms';
 import { HighlightCard } from '../../Directives/highlight-card';
 import { SquarePipe } from '../../Pipes/square-pipe';
 import { Staticproducts } from '../Services/staticproducts';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-products',
-  imports: [CommonModule, FormsModule, HighlightCard, SquarePipe],
+  imports: [CommonModule, FormsModule, HighlightCard, SquarePipe, RouterLink],
   templateUrl: './products.html',
   styleUrl: './products.css',
 })
@@ -34,7 +35,7 @@ export class Products implements OnChanges {
 
   @Input()
   receivedCatId: number = 0;
-  constructor(private _staticProductsService: Staticproducts) {
+  constructor(private _staticProductsService: Staticproducts, private _router: Router) {
     // this.products = [
     //   {
     //     id: 100,
@@ -144,5 +145,9 @@ export class Products implements OnChanges {
         this.receivedCatId
       );
     }
+  }
+  navigateToDetails(productId: number) {
+    this._router.navigateByUrl(`/Details/${productId}`);
+    // this._router.navigate(['/Details']);
   }
 }
